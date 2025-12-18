@@ -12,7 +12,7 @@ public class Health
     {
         var res = req.CreateResponse(HttpStatusCode.OK);
         res.Headers.Add("Content-Type", "application/json");
-        res.WriteStringAsync("""{"status":"ok"}""");
+        res.WriteStringAsync("""{"status":"ok boss"}""");
         return res;
     }
 }
