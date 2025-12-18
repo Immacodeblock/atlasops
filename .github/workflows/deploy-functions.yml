@@ -1,0 +1,36 @@
+name: Deploy Azure Functions (AtlasOps)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "src/api/**"
+      - ".github/workflows/deploy-functions.yml"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore src/api/AtlasOps.Api.csproj
+
+      - name: Build
+        run: dotnet build src/api/AtlasOps.Api.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish src/api/AtlasOps.Api.csproj -c Release -o publish
+
+      - name: Deploy
+        uses: Azure/functions-action@v1
+        with:
+          app-name: "func-atlasops-dev"
+          package: "publish"
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
