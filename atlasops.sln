@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -7,6 +7,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{81034408-37C8-1011-444E-4C15C2FADA8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtlasOps.Api", "src\api\AtlasOps.Api.csproj", "{FF85A4D4-4BC3-794A-E4A0-C6131AE2A6ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtlasOps.Infrastructure", "src\infra\AtlasOps.Infrastructure.csproj", "{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,10 @@ Global
 		{FF85A4D4-4BC3-794A-E4A0-C6131AE2A6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF85A4D4-4BC3-794A-E4A0-C6131AE2A6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF85A4D4-4BC3-794A-E4A0-C6131AE2A6ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -25,6 +31,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{81034408-37C8-1011-444E-4C15C2FADA8E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{FF85A4D4-4BC3-794A-E4A0-C6131AE2A6ED} = {81034408-37C8-1011-444E-4C15C2FADA8E}
+		{0DF4940D-19ED-49C9-AF89-6C946FC9A3F6} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {442F09AC-1DFB-47AD-B0B3-8570DFC30E97}
