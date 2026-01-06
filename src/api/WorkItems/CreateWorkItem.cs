@@ -6,14 +6,35 @@ using AtlasOps.Infrastructure.Enums;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.EntityFrameworkCore;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models; // for QueueMessageEncoding
+using System.Text.Json;
+
 
 namespace AtlasOps.Api.WorkItems;
 
 public sealed class CreateWorkItem
 {
     private readonly AtlasOpsDbContext _db;
+    private readonly QueueClient _queue;
 
-    public CreateWorkItem(AtlasOpsDbContext db) => _db = db;
+    public CreateWorkItem(AtlasOpsDbContext db)
+    {
+        _db = db;
+
+        var cs = Environment.GetEnvironmentVariable("AzureWebJobsStorage")
+                 ?? throw new InvalidOperationException("Missing AzureWebJobsStorage");
+
+        var options = new QueueClientOptions
+        {
+            MessageEncoding = QueueMessageEncoding.Base64
+        };
+
+        _queue = new QueueClient(cs, "workitem-checks", options);
+        _queue.CreateIfNotExists();
+    }
+
+    //public CreateWorkItem(AtlasOpsDbContext db) => _db = db;
 
     [Function("create-workitem")]
     public async Task<HttpResponseData> Run(
@@ -64,6 +85,11 @@ public sealed class CreateWorkItem
         });
 
         await _db.SaveChangesAsync();
+
+        // Enqueue for background processing
+        var message = JsonSerializer.Serialize(new { workItemId = workItem.Id });
+        await _queue.SendMessageAsync(message);
+
 
         return await HttpJson.CreatedAsync(req, new
         {
