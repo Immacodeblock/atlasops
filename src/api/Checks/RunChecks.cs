@@ -27,6 +27,9 @@ public sealed class RunChecks
     {
         _logger.LogInformation("Received queue message: {Message}", message);
 
+    try
+        {
+
         var payload = JsonSerializer.Deserialize<QueuePayload>(
             message,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -87,7 +90,13 @@ public sealed class RunChecks
         await _db.SaveChangesAsync();
 
         _logger.LogInformation("Checks completed for WorkItem {Id}", workItem.Id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error processing WorkItem checks");
+        }
     }
+
 
     private sealed record QueuePayload(long WorkItemId);
 }
