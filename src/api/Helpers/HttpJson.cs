@@ -50,4 +50,14 @@ public static class HttpJson
         var json = JsonSerializer.Serialize(body, JsonOptions);
         await res.WriteStringAsync(json);
     }
+
+    public static async Task<HttpResponseData> NotFoundAsync(
+        HttpRequestData req,
+        string message)
+    {
+        var res = req.CreateResponse(HttpStatusCode.NotFound);
+        await res.WriteAsJsonAsync(new { error = message });
+        return res;
+    }
+
 }
